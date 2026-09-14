@@ -24,8 +24,8 @@ site:
     - scientific computing
     - numerical methods
   language: en
-  url: https://username.github.io
-  baseurl: "" # Use /repository-name only for a GitHub project site.
+  url: https://bhattharshit.github.io
+  baseurl: "/academic-signature" # Use /repository-name only for a GitHub project site else keep it empty.
 
 profile:
   image: profile.png

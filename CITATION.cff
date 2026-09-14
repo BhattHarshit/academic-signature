@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: >-
+  If Academic Signature supports your website or derivative starter, please cite
+  the project and retain the license and provenance notices when redistributing
+  the software.
+title: Academic Signature
+type: software
+version: 1.0.0
+date-released: 2026-09-13
+license: MIT
+authors:
+  - family-names: Bhatt
+    given-names: Harshit
+repository-code: https://github.com/bhattharshit/academic-signature
+url: https://bhattharshit.github.io/academic-signature/
+references:
+  - type: software
+    title: al-folio
+    authors:
+      - family-names: Al-Shedivat
+        given-names: Maruan
+    url: https://github.com/alshedivat/al-folio
+  - type: software
+    title: Jekyll
+    url: https://github.com/jekyll/jekyll
+  - type: software
+    title: Jekyll Scholar
+    authors:
+      - family-names: Keil
+        given-names: Sylvester
+    url: https://github.com/inukshuk/jekyll-scholar
+  - type: software
+    title: RenderCV
+    url: https://github.com/rendercv/rendercv

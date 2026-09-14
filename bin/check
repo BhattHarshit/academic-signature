@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ -f .venv/bin/activate ]]; then
+  # shellcheck disable=SC1091
+  . .venv/bin/activate
+fi
+
+ruby _academic_signature/tools/check_starter.rb
+bundle exec jekyll build

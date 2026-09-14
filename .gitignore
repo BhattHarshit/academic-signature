@@ -1,0 +1,15 @@
+# Jekyll build output
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# Local dependency environments
+.bundle/
+vendor/
+.venv/
+
+# Local files
+.DS_Store
+.env
+*.gem

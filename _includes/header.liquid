@@ -1,0 +1,136 @@
+<a class="signature-skip-link" href="#main-content">Skip to content</a>
+<header class="signature-header">
+  <nav id="navbar" class="navbar navbar-light navbar-expand-sm {% if site.navbar_fixed %}fixed-top{% else %}sticky-top{% endif %}" role="navigation">
+    <div class="container-fluid signature-nav-shell">
+      <a class="signature-brand" href="{{ '/' | relative_url }}" aria-label="{{ site.title }} home">
+        <span class="signature-brand-text">{{ site.title }}</span>
+      </a>
+
+      <button
+        class="navbar-toggler collapsed navbar-toggler-main signature-menu-button"
+        type="button"
+        data-nav-toggle="navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar top-bar"></span>
+        <span class="icon-bar middle-bar"></span>
+        <span class="icon-bar bottom-bar"></span>
+      </button>
+
+      <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav">
+        <ul class="navbar-nav navbar-menu-list flex-nowrap signature-nav-list">
+          {% for candidate in site.pages %}
+            {% if candidate.permalink == '/' %}{% assign home_title = candidate.title | default: 'Home' %}{% endif %}
+          {% endfor %}
+
+          <li class="nav-item {% if page.permalink == '/' %}active{% endif %}">
+            <a class="nav-link" href="{{ '/' | relative_url }}" {% if page.permalink == '/' %}aria-current="page"{% endif %}>{{ home_title | default: 'Home' }}</a>
+          </li>
+
+          {% assign sorted_pages = site.pages | sort: 'nav_order' %}
+          {% for p in sorted_pages %}
+            {% if p.nav and p.autogen == null and p.permalink != '/' %}
+              {% if p.dropdown %}
+                {% assign has_active_child = false %}
+                {% for child in p.children %}
+                  {% if page.title == child.title %}{% assign has_active_child = true %}{% endif %}
+                {% endfor %}
+                <li class="nav-item dropdown {% if page.title == p.title or has_active_child %}active{% endif %}">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-nav-dropdown-toggle="true" aria-haspopup="true" aria-expanded="false">{{- p.title -}}</a>
+                  <div class="dropdown-menu dropdown-menu-right signature-dropdown" aria-labelledby="navbarDropdown">
+                    {% for child in p.children %}
+                      {% if child.title == 'divider' %}
+                        <div class="dropdown-divider"></div>
+                      {% else %}
+                        <a class="dropdown-item {% if page.title == child.title %}active{% endif %}" href="{% if child.permalink contains '://' %}{{ child.permalink }}{% else %}{{ child.permalink | relative_url }}{% endif %}">{{- child.title -}}</a>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                </li>
+              {% else %}
+                {% assign parent_link = p.permalink | remove: 'index.html' %}
+                {% assign is_active = false %}
+                {% if page.url contains parent_link %}{% assign is_active = true %}{% endif %}
+                <li class="nav-item {% if is_active %}active{% endif %}">
+                  {% if p.permalink contains '://' %}
+                    {% assign nav_url = p.permalink %}
+                  {% elsif p.permalink contains '/blog/' %}
+                    {% assign nav_url = '/blog/' %}
+                  {% else %}
+                    {% assign nav_url = p.url %}
+                  {% endif %}
+                  <a class="nav-link" href="{{ nav_url | relative_url }}" {% if is_active %}aria-current="page"{% endif %}>{{ p.title }}</a>
+                </li>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+
+          {% if site.signature_search.enabled %}
+            <li class="nav-item signature-search-item">
+              <button id="search-toggle" class="signature-search-button" type="button" title="Search the full site (⌘/Ctrl K)" aria-label="Open full-site search">
+                <span class="signature-search-trigger">
+                  <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                  <span class="signature-search-text">Search</span>
+                  <kbd class="signature-search-key">⌘/Ctrl K</kbd>
+                </span>
+              </button>
+            </li>
+          {% endif %}
+
+          {% if site.enable_darkmode %}
+            <li class="toggle-container signature-theme-item">
+              <button id="light-toggle" class="signature-theme-button" type="button" title="Toggle light/dark theme" aria-label="Toggle light/dark theme">
+                <i class="fa-solid fa-moon signature-theme-moon" aria-hidden="true"></i>
+                <i class="fa-solid fa-sun signature-theme-sun" aria-hidden="true"></i>
+              </button>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  {% assign signature_back_label = page.section_label %}
+  {% assign signature_back_url = page.section_url %}
+  {% unless signature_back_label %}
+    {% case page.collection %}
+      {% when 'projects' %}{% assign signature_back_label = 'Projects' %}{% assign signature_back_url = '/projects/' %}
+      {% when 'teachings' %}{% assign signature_back_label = 'Teaching' %}{% assign signature_back_url = '/teaching/' %}
+      {% when 'news' %}{% assign signature_back_label = 'News' %}{% assign signature_back_url = '/news/' %}
+      {% when 'posts' %}{% assign signature_back_label = 'Notes' %}{% assign signature_back_url = '/blog/' %}
+    {% endcase %}
+  {% endunless %}
+  {% if signature_back_label and signature_back_url %}
+    <a class="signature-context-return" href="{{ signature_back_url | relative_url }}" aria-label="Back to {{ signature_back_label }}">
+      <span aria-hidden="true">←</span> Back to {{ signature_back_label }}
+    </a>
+  {% endif %}
+
+  {% if site.enable_progressbar %}
+    <progress id="progress" value="0" aria-label="Page reading progress">
+      <div class="progress-container"><span class="progress-bar"></span></div>
+    </progress>
+  {% endif %}
+</header>
+<span id="main-content" class="signature-main-anchor" tabindex="-1"></span>
+
+{% if site.enable_darkmode %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const toggle = document.getElementById("light-toggle");
+    if (!toggle || typeof determineComputedTheme !== "function" || typeof setThemeSetting !== "function") return;
+    toggle.addEventListener(
+      "click",
+      function (event) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        setThemeSetting(determineComputedTheme() === "dark" ? "light" : "dark");
+      },
+      true
+    );
+  });
+</script>
+{% endif %}

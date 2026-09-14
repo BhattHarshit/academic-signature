@@ -1,0 +1,40 @@
+cv:
+  name: Your Name
+  label: Researcher in Applied Mathematics
+  email: you@example.edu
+  location: City, State
+  image: ""
+  summary: Numerical methods for scientific computing and mathematical modeling.
+
+  social_networks:
+    - network: GitHub
+      username: username
+    - network: LinkedIn
+      username: username
+
+  sections:
+    Education:
+      - institution: Example University
+        location: City, State
+        area: Applied Mathematics
+        studyType: PhD
+        start_date: 2023
+        end_date: present
+        highlights:
+          - Research in numerical analysis and scientific computing.
+    Experience:
+      - company: Example University
+        position: Graduate Researcher
+        location: City, State
+        start_date: 2024
+        end_date: present
+        highlights:
+          - Develop and test scalable computational methods for scientific models.
+    Awards:
+      - title: Example Academic Award
+        date: 2026
+        awarder: Example Organization
+        summary: Short description of the award or distinction.
+    Skills:
+      - name: Research
+        keywords: "Numerical analysis, scientific computing, optimization"

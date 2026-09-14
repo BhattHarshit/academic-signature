@@ -1,0 +1,40 @@
+/*******************************************************************************
+ * Academic Signature design tokens.
+ * Intentional local override of al_folio_core's variable contract.
+ ******************************************************************************/
+@use "sass:color";
+
+$red-color: #c64a56 !default;
+$red-color-dark: #92313c !default;
+$orange-color: #b96c25 !default;
+$blue-color: #315fa8 !default;
+$blue-color-dark: #234777 !default;
+$cyan-color: #3d8f9d !default;
+$light-cyan-color: color.adjust($cyan-color, $lightness: 25%);
+$green-color: #2f7d66 !default;
+$green-color-lime: #94a94b !default;
+$green-color-dark: #235c4c !default;
+$green-color-light: #e5f2ed !default;
+$green-color-bright: #41b98d !default;
+$purple-color: #315fa8 !default;
+$light-purple-color: color.adjust($purple-color, $lightness: 25%);
+$pink-color: #a85877 !default;
+$pink-color-light: #f4e8ed !default;
+$yellow-color: #c29b34 !default;
+$grey-color: #6b7280 !default;
+$grey-color-light: #e8ebef !default;
+$grey-color-dark: #111827;
+$grey-900: #172033;
+$white-color: #ffffff !default;
+$black-color: #172033 !default;
+
+$code-bg-color-light: rgba($blue-color, 0.055);
+$code-bg-color-dark: #172231 !default;
+$fa-font-path: "../webfonts";
+$back-to-top-z-index: 20;
+$back-to-top-bottom: 26px;
+$back-to-top-right: 26px;
+$back-to-top-diameter: 42px;
+$back-to-top-height: $back-to-top-diameter;
+$back-to-top-width: $back-to-top-diameter;
+$max-content-width: 1180px !default;

@@ -1,0 +1,71 @@
+name: Deploy website
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3.12'
+          bundler-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+          package-manager-cache: false
+
+      - name: Install image and Python dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick
+          python -m pip install --upgrade pip
+          python -m pip install -r _academic_signature/requirements.txt
+
+      - name: Check Academic Signature starter contract
+        run: |
+          ruby _academic_signature/tools/check_starter.rb
+          ruby -c _plugins/favicon_alias.rb
+          ruby -c _plugins/profile_bridge.rb
+          ruby -c _plugins/signature_search.rb
+          ruby -c _plugins/local_dev_webrick.rb
+          ruby -c _academic_signature/tools/check_starter.rb
+          node --check assets/js/signature-search.js
+
+      - name: Build
+        env:
+          JEKYLL_ENV: production
+        run: bundle exec jekyll build
+
+      - name: Purge unused CSS
+        run: |
+          npm install -g purgecss
+          purgecss -c _academic_signature/purgecss.config.js
+
+      - name: Deploy to gh-pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: _site
+          clean: true

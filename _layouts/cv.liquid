@@ -1,0 +1,41 @@
+---
+layout: default
+---
+{% assign cv_options = site.data.profile.cv %}
+{% assign cv_pdf = cv_options.pdf | default: page.cv_pdf %}
+{% assign website_view = cv_options.website_view %}
+<link rel="stylesheet" href="{{ '/assets/css/al-folio-cv.css' | relative_url }}">
+
+<div class="signature-cv-page">
+  <header class="signature-cv-heading">
+    <h1>Curriculum Vitae</h1>
+    {% if cv_pdf %}
+      <div class="signature-cv-actions" aria-label="CV actions">
+        <a class="signature-icon-action signature-icon-action-primary" href="{{ cv_pdf | relative_url }}" download title="{{ cv_options.download_label | default: 'Download CV' }}">
+          <i class="fa-solid fa-download" aria-hidden="true"></i><span>{{ cv_options.download_label | default: 'Download CV' }}</span>
+        </a>
+        {% if website_view %}
+          <a class="signature-icon-action" href="{{ cv_pdf | relative_url }}" target="_blank" rel="noopener" title="Open PDF in a new tab">
+            <i class="fa-regular fa-file-pdf" aria-hidden="true"></i><span>Open PDF</span>
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </header>
+
+  {% if website_view == true %}
+    <div class="signature-cv-web">
+      {% al_folio_cv_render %}
+    </div>
+  {% else %}
+    {% if cv_pdf %}
+      <div class="signature-cv-pdf-shell">
+        <object data="{{ cv_pdf | relative_url }}#view=FitH" type="application/pdf" width="100%" height="{{ cv_options.embed_height | default: 1180 }}">
+          <p>Your browser cannot display the PDF inline. <a href="{{ cv_pdf | relative_url }}">Open the CV PDF</a>.</p>
+        </object>
+      </div>
+    {% else %}
+      <div class="signature-empty-state">The CV PDF is not available.</div>
+    {% endif %}
+  {% endif %}
+</div>

@@ -1,0 +1,66 @@
+# User-editable site information. Most website setup happens in this file.
+
+identity:
+  first_name: Your
+  middle_name:
+  last_name: Name
+  display_name: Your Name
+  role: Researcher in Applied Mathematics
+  affiliation: Example University
+  affiliation_url: https://www.example.edu/
+  department: Department of Mathematics
+  location: City, State
+  email: you@example.edu
+  research_line: Applied mathematics · scientific computing · numerical methods
+  contact_note: >
+    Email is the best way to reach me about research, teaching, and collaboration.
+
+site:
+  title: "" # Leave blank to use display_name.
+  description: >
+    Academic website for Your Name: research, publications, teaching, projects, news, and CV.
+  keywords:
+    - applied mathematics
+    - scientific computing
+    - numerical methods
+  language: en
+  url: https://username.github.io
+  baseurl: "" # Use /repository-name only for a GitHub project site.
+
+profile:
+  image: profile.png
+  image_alt: Professional portrait
+  availability: Open to research conversations and collaboration
+
+cv:
+  pdf: /assets/pdf/demo-cv.pdf
+  website_view: false
+
+scholar:
+  first_name: [Your, Y.]
+  last_name: [Name]
+
+socials:
+  email: you@example.edu
+  # Replace these examples with your handles. Set any unused entry to "".
+  github_username: your-github-username
+  linkedin_username: your-linkedin-handle
+  scholar_userid: YOUR_SCHOLAR_ID
+  orcid_id: 0000-0000-0000-0000
+  rss_icon: true
+
+repositories:
+  github_users: []
+  # Example: [your-github-username/example-repository]
+  github_repos: []
+
+blog:
+  name: Notes & Updates
+  description: Research notes, teaching ideas, software, and academic updates.
+
+comments:
+  # Leave repo blank until Giscus is configured.
+  repo: ""
+  repo_id: ""
+  category: Comments
+  category_id: ""

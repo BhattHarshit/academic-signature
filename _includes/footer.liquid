@@ -1,0 +1,30 @@
+{% unless site.footer_fixed %}
+  {% if site.newsletter.enabled %}
+    <div class="signature-newsletter-wrap">
+      {% if site.plugins contains 'al_newsletter' %}
+        {% include plugins/al_newsletter_form_center.liquid %}
+      {% else %}
+        {% include newsletter.liquid %}
+      {% endif %}
+    </div>
+  {% endif %}
+{% endunless %}
+
+{% assign footer_options = site.signature_footer %}
+{% assign signature_url = site.academic_signature_url %}
+<footer class="signature-footer" role="contentinfo">
+  <div class="container signature-footer-inner">
+    <p class="signature-footer-sentence">
+      © {{ site.time | date: '%Y' }} {{ site.first_name }} {{ site.last_name }}. Built with
+      {% if signature_url %}<a href="{{ signature_url }}" target="_blank" rel="external noopener">Academic Signature</a>{% else %}Academic Signature{% endif %}.
+    </p>
+    <nav class="signature-footer-nav" aria-label="Footer navigation">
+      {% if footer_options.show_sitemap %}<a href="{{ '/sitemap/' | relative_url }}">Sitemap</a>{% endif %}
+      {% if footer_options.show_feed %}<a href="{{ '/feed.xml' | relative_url }}">RSS</a>{% endif %}
+      {% if footer_options.show_source and signature_url %}<a href="{{ signature_url }}" target="_blank" rel="external noopener"><i class="fa-brands fa-github" aria-hidden="true"></i> Source</a>{% endif %}
+      {% if site.impressum_path %}<a href="{{ site.impressum_path | relative_url }}">Impressum</a>{% endif %}
+    </nav>
+  </div>
+</footer>
+
+{% include signature_search.liquid %}

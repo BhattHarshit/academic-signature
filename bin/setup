@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+printf '%s\n' 'Academic Signature setup' ''
+
+if ! command -v bundle >/dev/null 2>&1; then
+  printf '%s\n' 'Bundler is not available. Install a current Ruby and run: gem install bundler' >&2
+  exit 1
+fi
+
+bundle install
+
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r _academic_signature/requirements.txt
+
+printf '\n%s\n' 'Setup complete. Run ./bin/serve to preview the site.'

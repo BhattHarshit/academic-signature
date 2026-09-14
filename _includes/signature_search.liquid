@@ -1,0 +1,68 @@
+{% assign search_options = site.signature_search %}
+{% if search_options.enabled %}
+  <div
+    id="signature-search"
+    class="signature-search-overlay"
+    data-index-url="{{ '/assets/search-index.json' | relative_url }}"
+    data-max-results="{{ search_options.max_results | default: 14 }}"
+    hidden
+  >
+    <button class="signature-search-backdrop" type="button" data-search-close aria-label="Close search"></button>
+
+    <section class="signature-search-dialog" role="dialog" aria-labelledby="signature-search-title">
+      <div class="signature-search-fixed">
+        <div class="signature-search-header">
+          <div>
+            <p class="signature-eyebrow">Full-site search</p>
+            <h2 id="signature-search-title">Find anything</h2>
+          </div>
+
+          <button class="signature-search-close" type="button" data-search-close aria-label="Close search">
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <label class="signature-search-field" for="signature-search-input">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+          <input
+            id="signature-search-input"
+            type="search"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="Search research, methods, courses, projects, news…"
+          >
+          <kbd>esc</kbd>
+        </label>
+
+        <div class="signature-search-filters" aria-label="Filter search results">
+          {% assign search_filters = 'All,Page,Publications,Projects,Teaching,News,Notes' | split: ',' %}
+          {% for filter in search_filters %}
+            <button
+              type="button"
+              data-search-filter="{{ filter }}"
+              aria-pressed="{% if filter == 'All' %}true{% else %}false{% endif %}"
+              class="{% if filter == 'All' %}is-active{% endif %}"
+            >
+              {{ filter }}
+            </button>
+          {% endfor %}
+        </div>
+
+        <div class="signature-search-guide">Search every page, project, course, update, note, and publication.</div>
+      </div>
+
+      <div class="signature-search-results-panel">
+        <div id="signature-search-status" class="signature-search-status" aria-live="polite"></div>
+        <div id="signature-search-results" class="signature-search-results"></div>
+      </div>
+
+      <div class="signature-search-footer-hint">
+        <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+        <span><kbd>↵</kbd> open</span>
+        <span><kbd>⌘/Ctrl K</kbd> search</span>
+      </div>
+    </section>
+  </div>
+
+  <script src="{{ '/assets/js/signature-search.js' | relative_url }}" defer></script>
+{% endif %}

@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ -f .venv/bin/activate ]]; then
+  # shellcheck disable=SC1091
+  . .venv/bin/activate
+fi
+
+printf '%s\n' \
+  'Academic Signature development server' \
+  '→ http://127.0.0.1:4000/' \
+  '→ Press Ctrl-C to stop.' \
+  ''
+
+exec bundle exec jekyll serve --livereload "$@"

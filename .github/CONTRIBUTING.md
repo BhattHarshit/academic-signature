@@ -1,25 +1,23 @@
 # Contributing
 
-Contributions are welcome. Keep changes focused and preserve the separation between Academic Signature's local presentation layer and the upstream al-folio runtime.
+Contributions to Academic Signature are welcome.
 
-## Before opening a pull request
+For small fixes or improvements, feel free to open a pull request. For larger features or design changes, please open an issue first so the idea can be discussed before implementation.
 
-```bash
-./bin/check
-bundle exec al-folio upgrade audit --no-fail
-bundle exec al-folio upgrade overrides audit
-```
+## Workflow
 
-Review visual changes in light and dark modes at desktop and mobile widths.
+1. Fork the repository.
+2. Create a branch for your change.
+3. Make and test your changes.
+4. Run:
 
-## Where changes belong
+   ```bash
+   ./bin/check
+   ```
 
-- User-facing profile settings: `_data/profile.yml`
-- Content: `_pages/`, `_projects/`, `_teachings/`, `_news/`, `_posts/`
-- Visual system: `_sass/`
-- Header, footer, and search presentation: `_includes/`
-- Local generators: `_plugins/`
+5. Commit with a clear message.
+6. Open a pull request describing what changed and why.
 
-If a change belongs to al-folio itself, prefer contributing it upstream instead of copying additional runtime code into this repository.
+Please keep changes focused, preserve the existing design philosophy, and avoid unnecessary dependencies or complexity.
 
-Please preserve `LICENSE` and `NOTICE.md`.
+By contributing, you agree that your contributions will be licensed under the MIT License used by this repository.

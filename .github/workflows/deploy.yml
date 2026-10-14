@@ -63,11 +63,6 @@ jobs:
           ACADEMIC_SIGNATURE_PAGES_DEPLOY: 'true'
         run: bundle exec jekyll build
 
-      - name: Purge unused CSS
-        run: |
-          npm install -g purgecss
-          purgecss -c _academic_signature/purgecss.config.js
-
       - name: Upload website
         uses: actions/upload-pages-artifact@v4
         with:

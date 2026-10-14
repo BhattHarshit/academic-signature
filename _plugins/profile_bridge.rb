@@ -29,8 +29,9 @@ module AcademicSignature
       assign(site.config, 'description', settings['description'])
       assign(site.config, 'keywords', Array(settings['keywords']).join(', '))
       assign(site.config, 'lang', settings['language'])
-      assign(site.config, 'url', settings['url'])
-      assign(site.config, 'baseurl', settings['baseurl'])
+      site_url, baseurl = deployment_location(site, settings)
+      assign(site.config, 'url', site_url)
+      site.config['baseurl'] = baseurl.to_s
 
       # jekyll-socials assumes every present key has a meaningful value. Blank
       # optional handles are therefore removed instead of forwarded as nil/"".
@@ -59,6 +60,49 @@ module AcademicSignature
     end
 
     private
+
+    # Resolve GitHub Pages URLs during deployment.
+    # Local previews keep their configured URLs.
+    def deployment_location(site, settings)
+      configured_url = settings['url'].to_s.strip
+      configured_baseurl = settings['baseurl'].to_s
+
+      unless ENV['ACADEMIC_SIGNATURE_PAGES_DEPLOY'] == 'true'
+        return [configured_url, configured_baseurl]
+      end
+
+      owner, repo = ENV['GITHUB_REPOSITORY'].to_s.split('/', 2)
+
+      if owner.to_s.empty? || repo.to_s.empty?
+        return [configured_url, configured_baseurl]
+      end
+
+      # Respect an explicitly configured custom domain.
+      cname_path = File.join(site.source, 'CNAME')
+
+      if File.file?(cname_path)
+        domain = File.read(cname_path).lines.first.to_s.strip
+
+        if domain.match?(/\A[a-z0-9][a-z0-9.-]*\.[a-z]{2,}\z/i)
+          return ["https://#{domain}", '']
+        end
+      end
+
+      # Do not replace non-GitHub Pages domains.
+      github_url = %r{\Ahttps?://[^/]+\.github\.io(?:/.*)?\z}i
+
+      unless configured_url.empty? || configured_url.match?(github_url)
+        return [configured_url, configured_baseurl]
+      end
+
+      baseurl = if repo.casecmp("#{owner}.github.io").zero?
+                  ''
+                else
+                  "/#{repo}"
+                end
+
+      ["https://#{owner.downcase}.github.io", baseurl]
+    end
 
     def present?(value)
       return false if value.nil?

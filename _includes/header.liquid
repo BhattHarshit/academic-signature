@@ -68,30 +68,44 @@
             {% endif %}
           {% endfor %}
 
-          {% if site.signature_search.enabled %}
-            <li class="nav-item signature-search-item">
-              <button id="search-toggle" class="signature-search-button" type="button" title="Search the full site (⌘/Ctrl K)" aria-label="Open full-site search">
-                <span class="signature-search-trigger">
-                  <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-                  <span class="signature-search-text">Search</span>
-                  <kbd class="signature-search-key">⌘/Ctrl K</kbd>
-                </span>
-              </button>
-            </li>
-          {% endif %}
-
-          {% if site.enable_darkmode %}
-            <li class="toggle-container signature-theme-item">
-              <button id="light-toggle" class="signature-theme-button" type="button" title="Toggle light/dark theme" aria-label="Toggle light/dark theme">
-                <i class="fa-solid fa-moon signature-theme-moon" aria-hidden="true"></i>
-                <i class="fa-solid fa-sun signature-theme-sun" aria-hidden="true"></i>
-              </button>
-            </li>
-          {% endif %}
+        
         </ul>
       </div>
+
+      <div class="signature-header-actions">
+        {% if site.signature_search.enabled %}
+          <button
+            id="search-toggle"
+            class="signature-search-button"
+            type="button"
+            title="Search the full site (⌘/Ctrl K)"
+            aria-label="Open full-site search"
+          >
+            <span class="signature-search-trigger">
+              <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+              <span class="signature-search-text">Search</span>
+              <kbd class="signature-search-key">⌘/Ctrl K</kbd>
+            </span>
+          </button>
+        {% endif %}
+
+        {% if site.enable_darkmode %}
+          <button
+            id="light-toggle"
+            class="signature-theme-button"
+            type="button"
+            title="Toggle light/dark theme"
+            aria-label="Toggle light/dark theme"
+          >
+            <i class="fa-solid fa-moon signature-theme-moon" aria-hidden="true"></i>
+            <i class="fa-solid fa-sun signature-theme-sun" aria-hidden="true"></i>
+          </button>
+        {% endif %}
+      </div>
+
     </div>
   </nav>
+
 
   {% assign signature_back_label = page.section_label %}
   {% assign signature_back_url = page.section_url %}

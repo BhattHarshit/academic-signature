@@ -1,3 +1,4 @@
+
 name: Deploy website
 
 on:
@@ -6,18 +7,19 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
-  group: pages-deploy
-  cancel-in-progress: true
+  group: github-pages
+  cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -26,36 +28,39 @@ jobs:
           bundler-cache: true
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.13'
 
       - name: Set up Node
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: '24'
           package-manager-cache: false
 
-      - name: Install image and Python dependencies
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y imagemagick
           python -m pip install --upgrade pip
           python -m pip install -r _academic_signature/requirements.txt
 
-      - name: Check Academic Signature starter contract
+      - name: Check configuration
         run: |
           ruby _academic_signature/tools/check_starter.rb
           ruby -c _plugins/favicon_alias.rb
           ruby -c _plugins/profile_bridge.rb
           ruby -c _plugins/signature_search.rb
           ruby -c _plugins/local_dev_webrick.rb
-          ruby -c _academic_signature/tools/check_starter.rb
           node --check assets/js/signature-search.js
 
-      - name: Build
+      - name: Build website
         env:
           JEKYLL_ENV: production
+          ACADEMIC_SIGNATURE_PAGES_DEPLOY: 'true'
         run: bundle exec jekyll build
 
       - name: Purge unused CSS
@@ -63,9 +68,25 @@ jobs:
           npm install -g purgecss
           purgecss -c _academic_signature/purgecss.config.js
 
-      - name: Deploy to gh-pages
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Upload website
+        uses: actions/upload-pages-artifact@v4
         with:
-          branch: gh-pages
-          folder: _site
-          clean: true
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

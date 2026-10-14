@@ -1395,3 +1395,149 @@ a.signature-context-return:hover {
   .signature-teaching-row { gap: 0.5rem; padding: 0.68rem 0; }
   .signature-row-arrow { width: 28px; height: 28px; }
 }
+
+
+/* Header tools outside the collapsible navigation */
+.signature-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex: 0 0 auto;
+}
+
+.signature-header-actions .signature-search-button {
+  padding: 0;
+}
+
+.signature-header-actions .signature-theme-button {
+  flex: 0 0 auto;
+}
+
+/* Mobile header and footer */
+@media (max-width: 575.98px) {
+  /* Keep the brand and controls on one row */
+  .signature-nav-shell {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .signature-brand {
+    order: 0;
+    flex: 1 1 auto;
+    min-width: 0;
+    margin-right: auto;
+  }
+
+  .signature-brand-text {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .signature-header-actions {
+    order: 1;
+    gap: 0.3rem;
+    margin-left: auto;
+  }
+
+  .signature-menu-button {
+    order: 2;
+    flex: 0 0 auto;
+    margin-left: 0.2rem;
+  }
+
+  /* The navigation menu occupies its own row */
+  #navbar .navbar-collapse-main {
+    order: 3;
+    flex-basis: 100%;
+    width: 100%;
+    min-height: 0;
+  }
+
+  /* Compact, always-visible header tools */
+  .signature-header-actions .signature-search-button,
+  .signature-header-actions .signature-theme-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--signature-border);
+    border-radius: 10px;
+    background: var(--signature-surface);
+    color: var(--signature-muted);
+  }
+
+  .signature-header-actions .signature-search-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    font-size: 0.95rem;
+  }
+
+  .signature-header-actions .signature-search-text,
+  .signature-header-actions .signature-search-key {
+    display: none;
+  }
+
+  .signature-header-actions .signature-search-button:hover,
+  .signature-header-actions .signature-theme-button:hover {
+    color: var(--signature-accent);
+    border-color: var(--signature-accent);
+    background: var(--signature-accent-soft);
+  }
+
+  /* Footer: left-aligned and comfortably spaced */
+  .signature-footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding-block: 0.9rem;
+    text-align: left;
+  }
+
+  .signature-footer-sentence {
+    margin: 0;
+    text-align: left;
+  }
+
+  .signature-footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 0.5rem 1.1rem;
+    margin: 0;
+    text-align: left;
+  }
+}
+
+/* Match the embedded CV viewer to the page on mobile. */
+@media (max-width: 575.98px) {
+  .signature-cv-pdf-shell {
+    min-height: 0;
+  }
+
+  .signature-cv-pdf-shell object {
+    display: block;
+    width: 100%;
+    height: auto !important;
+    min-height: 0;
+    aspect-ratio: 8.5 / 11;
+  }
+}

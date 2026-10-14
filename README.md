@@ -13,24 +13,13 @@ An academic website template build on [al-folio](https://github.com/alshedivat/a
 </p>
 
 ## Quick start
-
-1. Click **Use this template → Create a new repository**.
-2. Edit `_data/profile.yml` with your name, affiliation, website URL, social links, and CV settings.
-3. Replace the example profile image, CV, publications, research, teaching, projects, news, and notes.
-4. Preview locally:
-
-   ```bash
-   ./bin/setup
-   ./bin/serve
-   ```
-
-5. Before publishing, run:
-
-   ```bash
-   ./bin/check
-   ```
-
-For a personal GitHub Pages site, name the repository `YOUR-USERNAME.github.io`. For a project site, use any repository name and set the matching `site.baseurl` in `_data/profile.yml`.
+1. Create a GitHub account if you don't have one and login with that.
+2. Click **Use this template** on the top right corner.
+3. Create a **new repository** and name it: `your_Github_username.github.io`
+4. Open **Settings → Pages** and under **Build and deployment**, set **Source** to **GitHub Actions**.
+5. Edit `data/profile.yml` slightly and commit changes. (OR, Open **Actions → Deploy Hugo site to GitHub Pages → Run workflow**.)
+6. Your website will be available at:  `https://your_Github_username.github.io/`
+7. Edit `data/profile.yml` and `data/cv.yml` to update your information and update your data inside `assets/`.
 
 ## What you normally edit
 
@@ -46,8 +35,6 @@ For a personal GitHub Pages site, name the repository `YOUR-USERNAME.github.io`.
 | Web CV | `_data/cv.yml` |
 | Profile image | `assets/img/profile.png` |
 | Official CV | `assets/pdf/` |
-
-The example social handles are intentionally populated so the GitHub, LinkedIn, Google Scholar, and ORCID icons are visible in the starter. Replace them with your own values or leave an unused field blank.
 
 ### CV display
 
